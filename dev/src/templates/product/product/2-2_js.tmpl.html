@@ -1,0 +1,151 @@
+{{define "product/product/js.tmpl.html" }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	
+	$(document).ready(function() {
+		$('#pl-table').DataTable( {
+			 
+			"bAutoWidth": false,
+			"aaData":{{.GetProduct}},
+			"aoColumns":
+			[
+			{"mDataProp": "IntIDproductName", className: "text-center"},
+			{"mDataProp": "ProductName", className: "text-center"},
+			{"mDataProp": "UnitSmall", className: "text-center"},  // UnitSmall
+			{"mDataProp": "ProductPrice.Price_001", className: "text-center"},
+			{"mDataProp": "ProductPrice.Price_002", className: "text-center"},
+			{"mDataProp": "ProductPrice.Price_003", className: "text-center"},
+			 
+			] , /// color
+			createdRow: function (row, data, dataIndex) {  
+							if(data['Status'] == "ระงับการใช้งาน"){
+								$(row).css('background-color', '#bbbbbb');
+							}
+			},
+											
+		} ); // end DataTable
+		// Click
+			var table = $('#pl-table').DataTable(); // กำลังตัวแปรตาราง
+			$('#pl-table tbody').on('click', 'tr', function () {
+				var data = table.row(this).data(); //ตั้งค่าตัวแปรทั้งบรรทัด
+				 
+				    const form = document.createElement('form');
+						form.method = "POST";
+						form.action = "/Productdetail/show";
+						 
+					const hiddenField = document.createElement('input');
+						hiddenField.type = 'hidden';
+						hiddenField.name = "idd";
+						hiddenField.value = data['PKKey'];
+						form.appendChild(hiddenField);
+						 
+						document.body.appendChild(form);
+						form.submit();
+			} ); //end $
+		
+	}
+	); // end $.Doc
+
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+	{{range .CateNow}}
+ 
+	document.getElementById("Status").value = {{.Status}} ;
+	document.getElementById("CateName").value = {{.CateName}} ;
+	 
+	document.getElementById("PKkey").value = {{.PKKey}} ;
+	{{end}}
+</script>
+
+{{end}}
+
+function AddNow(){
+	 
+		if(document.getElementById("CateName").value == ""){alert("กรุณากรอกข้อมูลใหครบถ้วน");
+		}else{ 
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "ProductCateNew",  //  13,14
+					'CateProduct': document.getElementById("CateName").value,
+					'Status': document.getElementById("status").value,
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location.reload(true);
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end	func
+	$(document).ready(function() {
+		$('#pl-table').DataTable( {
+			"responsive": true,
+			"aaData":{{.Cate}},
+			"aoColumns":
+			[
+			{"mDataProp": "CateName", className: "text-center"},
+			{"mDataProp": "Status",className: "text-center"},
+			{"mDataProp": "PKKey",
+				render: function ( data, type, row ) {
+					return '<a href="/cateproduct/'+data+'">Click</a>';
+					
+					
+				},
+				
+			className: "text-center"},
+			] , /// color
+			createdRow: function (row, data, dataIndex) {  
+							if(data['Status'] == "ระงับการใช้งาน"){
+								$(row).css('background-color', '#bbbbbb');
+							}
+			},
+											
+		} ); // end DataTable
+		
+		
+	}
+	); // end $.Doc
+	function UpNow(){ 
+		if(document.getElementById("CateName").value == ""){alert("กรุณากรอกข้อมูลใหครบถ้วน");}else{
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "CateProductup",  //   
+					'PKKey1':document.getElementById("PKkey").value,
+					'Status':document.getElementById("Status").value,
+					'CateName': document.getElementById("CateName").value,
+					 
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location = "/setting/ProductCate";
+					 
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end

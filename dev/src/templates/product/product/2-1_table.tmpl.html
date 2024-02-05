@@ -1,0 +1,70 @@
+{{define "product/product/2-1_tableNewProduct.tmpl.html" }}
+ 	<div class="dt-responsive table-responsive">
+								<table  class="table  table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>ลำดับที่</th>
+											<th>ประเภทสินค้า</th>
+											<th>รหัสสินค้าภายนอก</th>
+											<th>รหัสสินค้าภายใน</th>
+											<th>ชื่อสินค้า</th>
+										 
+										</tr>
+									</thead>
+									{{range .GetProduct}}
+									<tr>
+											<td>{{.CountNow}}</td>
+											<td>{{.ProductCate}}</td>
+											<td>{{.ExtIDproductName}}</td>
+											<td>{{.IntIDproductName}}</td>
+											<td>{{.ProductName}}</td>
+											 
+										</tr>
+									{{end}}
+									
+									 
+								</table>
+	</div>
+
+{{end}}
+
+{{define "product/product/2-1_tableBestProduct.tmpl.html" }}
+ 	<div class="dt-responsive table-responsive">
+								<table  class="table  table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>ลำดับที่.</th>
+											<th>ประเภทสินค้า</th>
+											<th>รหัสสินค้าภายนอก</th>
+											<th>รหัสสินค้าภายใน</th>
+											<th>ชื่อสินค้า</th>
+										 
+										</tr>
+									</thead>
+									 
+									
+									 
+								</table>
+	</div>
+
+{{end}}
+{{define "product/product/2-1_tablePromotion.tmpl.html" }}
+ 	<div class="dt-responsive table-responsive">
+								<table  class="table  table-bordered nowrap">
+									<thead>
+										<tr>
+											<th>ลำดับที่.</th>
+											<th>ชื่อสินค้า</th>
+											<th>โปรโมชั่น</th>
+											 
+										 
+										</tr>
+									</thead>
+									 
+									 
+								</table>
+	</div>
+
+{{end}}
+
+										 

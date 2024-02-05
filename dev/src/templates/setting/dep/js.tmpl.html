@@ -1,0 +1,189 @@
+{{define "setting/dep/js.tmpl.html" }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	function DepUp(PKKey){  
+		if(document.getElementById('txt_ObjectID("'+PKKey+'")').value == ""){alert("กรุณากรอกข้อมูลชื่อแผนกให้ครบถ้วน");}else{
+			
+			
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "DepUp",  //  13,14
+					'PKKey' : PKKey,
+					'DepName': document.getElementById('txt_ObjectID("'+PKKey+'")').value,
+					'Status':document.getElementById('sel_ObjectID("'+PKKey+'")').value,
+					'DepOld':document.getElementById('hi_ObjectID("'+PKKey+'")').value,
+					
+					
+					
+					
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location.reload(true);
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end func 
+	function DepNew(){  
+		if(document.getElementById('txt_newDep').value == ""){alert("กรุณากรอกข้อมูลชื่อแผนกให้ครบถ้วน");}else{
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "DepNew",  
+				 
+					'DepName': document.getElementById('txt_newDep').value,
+				
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location.reload(true);
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end func 
+	
+	
+	
+	
+</script>
+{{end}}
+
+$(document).ready(function() {
+
+
+$('#pl-table1').DataTable( {
+"responsive": true,
+"aaData":{{.GetStaff}},
+"aoColumns":
+[
+{"mDataProp": "DepName", className: "text-center"},
+{"mDataProp": "Status", render: function ( data, type, row ) {
+return '<select><option>111111</option></select><a href="/staff/'+data+'">Click</a>';
+
+
+},
+
+
+className: "text-center"},
+
+
+{"mDataProp": "PKKey",
+render: function ( data, type, row ) {
+return '<a href="/staff/'+data+'">Click</a>';
+
+
+},
+
+className: "text-center"},
+]
+} ); // end DataTable
+
+
+}
+); // end $.Doc
+
+function AddNow(){
+if(document.getElementById("StaffName").value == ""||document.getElementById("usr").value == ""||document.getElementById("pwd").value==""){alert("กรุณากรอกข้อมูลใหครบถ้วน");}else{
+$.ajax({
+type: 'POST',
+url: '/setting/ajax/',
+data: {
+'menu': "staffnew",  //  13,14
+'StaffName': document.getElementById("StaffName").value,
+'Dep': document.getElementById("Dep").value,
+'Level':document.getElementById("Level").value,
+'usr':document.getElementById("usr").value,
+'pwd':document.getElementById("pwd").value,
+'Email':document.getElementById("Email").value,
+'Mobile':document.getElementById("Mobile").value,
+'Tel':document.getElementById("Tel").value,
+contentType: false,
+processData: false,
+},
+success: function (data) { 
+alert(data.msg);
+window.location.reload(true);
+},
+error: function (XMLHttpRequest, errorThrown) {
+alert("Error => " + errorThrown + "->" );
+}
+})// end ajax
+
+}// end else
+
+
+
+}// end
+
+//// Onload & Update
+
+{{range .StaffDetail}}
+
+document.getElementById("Status").value = {{.Status}} ;
+document.getElementById("StaffName").value = {{.StaffName}} ;
+document.getElementById("Dep").value = {{.Dep}} ;
+document.getElementById("Level").value = {{.JobLevel}} ;
+document.getElementById("usr").value = {{.Username}} ;
+
+document.getElementById("Email").value = {{.Contacts.Email}} ;
+document.getElementById("Mobile").value = {{.Contacts.Mobile}} ;
+document.getElementById("Tel").value = {{.Contacts.Tel}} ;
+document.getElementById("PKkey").value = {{.PKKey}} ;
+{{end}}
+function UpNow(){
+if(document.getElementById("StaffName").value == ""||document.getElementById("usr").value == ""){alert("กรุณากรอกข้อมูลใหครบถ้วน");}else{
+$.ajax({
+type: 'POST',
+url: '/setting/ajax/',
+data: {
+'menu': "staffup",  //  13,14
+'PKkey':document.getElementById("PKkey").value,
+'Status':document.getElementById("Status").value,
+'StaffName': document.getElementById("StaffName").value,
+'Dep': document.getElementById("Dep").value,
+'Level':document.getElementById("Level").value,
+'usr':document.getElementById("usr").value,
+'pwd':document.getElementById("pwd").value,
+'Email':document.getElementById("Email").value,
+'Mobile':document.getElementById("Mobile").value,
+'Tel':document.getElementById("Tel").value,
+contentType: false,
+processData: false,
+},
+success: function (data) { 
+alert(data.msg);
+window.location = "/setting/staff";
+
+},
+error: function (XMLHttpRequest, errorThrown) {
+alert("Error => " + errorThrown + "->" );
+}
+})// end ajax
+
+}// end else
+
+
+
+}// end
+

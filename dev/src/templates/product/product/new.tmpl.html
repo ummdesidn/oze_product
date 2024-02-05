@@ -1,0 +1,376 @@
+{{define "product/product/new.tmpl.html" }}
+<div class="page-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<!-- Basic Form Inputs card start -->
+			
+			<Form action="/product/productAjax" method="POST" enctype="multipart/form-data" onsubmit="return CheckSummit()" name="newForm">
+				 
+				<input type="hidden" name="menu"value="NewProduct">
+			 
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">กลุ่มสินค้า</label>
+					<div class="col-sm-4">
+						<select   class="form-control"   id="ProductCate" name="ProductCate" onchange="getSupplierWithCate()">
+							<option value="n/a">กรุณาเลือกกลุ่มสินค้า</option>
+							{{range $cateProduct := .CateProduct}}
+							<option value="{{$cateProduct.CateName}}">{{$cateProduct.CateName}}</option>
+							{{end}}
+							
+						</select>
+						
+						</div>
+					<label class="col-sm-2 col-form-label">ประเภทสินค้า</label>
+					<div class="col-sm-4">
+						<select  class="form-control" id="ProductCountStock" name="ProductCountStock">
+							<option value="1">นับสต็อก</option>
+							<option value="2">ไม่นับสต็อก</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ชื่อสินค้า</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="productName" name="productName">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">รหัสภายใน</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="IntIDproductName" name="IntIDproductName" value="ออกเลขโดยระบบ" disabled>
+					</div>
+					<label class="col-sm-2 col-form-label">รหัสภายนอก</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="ExtIDproductName" name="ExtIDproductName">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ข้อมูลหน่วยนับ </label>
+					<div class="col-sm-3">
+						<select   class="form-control" id="unitBig" name="unitBig">
+							<option value="n/a">กรุณาเลือกหน่วยนับใหญ่</option>
+							{{range $unitBig := .GetAllUnitProduct}}
+							<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+							{{end}}
+						</select>
+					</div>
+					<label class="col-sm-2 col-form-label" >มีจำนวน </label>
+					<div class="col-sm-2">
+						<input type="number" min="0" class="form-control" id="unitCount" name="unitCount" placeholder="จำนวนที่บรรจุ">
+					</div>
+					<div class="col-sm-3">
+						<select   class="form-control" id="unitSmall" name="unitSmall">
+							<option value="n/a">กรุณาเลือกหน่วยนับเล็ก</option>
+							{{range $unitBig := .GetAllUnitProduct}}
+							<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+							{{end}}
+						</select>
+					</div>
+					
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ผู้ผลิต</label>
+					<div class="col-sm-6">
+						<select  class="js-example-basic-single"   id="productSupplier" name="productSupplier">
+							<option value="n/a||n/a">กรุณาเลือกกลุ่มสินค้า</option>
+							
+						</select>
+						
+					</div>
+					
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">รายละเอียดสินค้า</label>
+					<div class="col-sm-10">
+						<textarea rows="3" cols="5" class="form-control"id="productdetail" name="productdetail"  ></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">สินค้าทดแทน</label>
+					<div class="col-sm-10">
+						<select  class="js-example-basic-multiple" multiple="multiple" id="productreplace" name="productreplace">
+							
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">สินค้าขายประกอบ</label>
+					<div class="col-sm-10">
+						<select  class="js-example-basic-multiple" multiple="multiple" id="productselltoo" name="productselltoo">
+							
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Hashtag</label>
+					<div class="col-sm-10">
+						<select  class="js-example-basic-multiple" multiple="multiple" id="producthashtag" name="producthashtag">
+							{{range $hashtag := .Hashtag}}
+							<option value="{{$hashtag.HashtagName}}">{{$hashtag.HashtagName}}</option>
+							{{end}}
+						</select>
+					</div>
+				</div>
+				<!-- point -->
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">แต้มคะแนน / ชิ้น</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="productpoint" name="productpoint" >
+					</div>
+					<label class="col-sm-2 col-form-label" >ค่าคอมมิชชั่น </label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="productcommition" name="productcommition" >
+					</div>
+				</div>
+				<!-- end point -->
+				<!-- price -->
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาปลีก</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_001" name="price_001" placeholder="ราคาปลีก 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_002" name="price_002" placeholder="ราคาปลีก 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_003" name="price_003" placeholder="ราคาปลีก 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาค้าส่ง</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_101" name="price_101" placeholder="ราคาค้าส่ง 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_102" name="price_102" placeholder="ราคาค้าส่ง 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_103" name="price_103" placeholder="ราคาค้าส่ง 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาปัจจุบัน</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_201" name="price_201" placeholder="ราคาปัจจุบัน 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_202" name="price_202" placeholder="ราคาปัจจุบัน 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_203" name="price_203" placeholder="ราคาปัจจุบัน 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาไฟลุกวงเงิน</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_301" name="price_301" placeholder="ราคาไฟลุกวงเงิน 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_302" name="price_302" placeholder="ราคาไฟลุกวงเงิน 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_303" name="price_303" placeholder="ราคาไฟลุกวงเงิน 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาไฟลุกเซลล์</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_401" name="price_401" placeholder="ราคาไฟลุกเซลล์ 1">
+						</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_402" name="price_402" placeholder="ราคาไฟลุกเซลล์ 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_403" name="price_403" placeholder="ราคาไฟลุกเซลล์ 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ราคาเซลล์ 108</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_501" name="price_501" placeholder="ราคาเซลล์ 108 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_502" name="price_502" placeholder="ราคาเซลล์ 108 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_503" name="price_503" placeholder="ราคาเซลล์ 108 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label"></label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_504" name="price_504" placeholder="ราคาเซลล์ 108 4">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_505" name="price_505" placeholder="ราคาเซลล์ 108 5">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_506" name="price_506" placeholder="ราคาเซลล์ 108 6">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label"></label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_507" name="price_507" placeholder="ราคาเซลล์ 108 7">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_508" name="price_508" placeholder="ราคาเซลล์ 108 8">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_509" name="price_509" placeholder="ราคาเซลล์ 108 9">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">เซลล์ บริษัท</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_601" name="price_601" placeholder="เซลล์ บริษัท 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_602" name="price_602" placeholder="เซลล์ บริษัท 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_603" name="price_603" placeholder="เซลล์ บริษัท 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">เซลล์ดั๊กอะโกร</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_701" name="price_701" placeholder="เซลล์ดั๊กอะโกร 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_702" name="price_702" placeholder="เซลล์ดั๊กอะโกร 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_703" name="price_703" placeholder="เซลล์ดั๊กอะโกร 3">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">งานประมูล</label>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_801" name="price_801" placeholder="งานประมูล 1">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_802" name="price_802" placeholder="งานประมูล 2">
+					</div>
+					<div class="col-sm-3">
+						<input type="text"  class="form-control" id="price_803" name="price_803" placeholder="งานประมูล 3">
+					</div>
+				</div>
+				<!-- End price -->
+				<!-- img -->
+				<!-- row 1 -->
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">รูปสินค้า</label>
+					<div class="col-sm-5">
+						<!-- img1 -->
+						<div class="card">
+							
+							<div class="card-block">
+								<div class="sub-title">รูปสินค้า 1</div>
+								<input type="file" name="img_1" id="filer_input_oze_img_1"   onchange="showPreview(this,'img_1')" accept="image/*">
+								<a class="thumb-image" href="/static/error.png" id="sh_img_1"  >
+									<img src="/static/error.png" width="400" class="img-responsive" alt="รูปที่ 1 " id="img_1" onerror="this.src='/static/error.png'" >
+								</a>
+								
+								
+								
+							</div>
+							<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_1"   onclick="delImg('img_1')">ลบรูปสินค้า</button> 
+						</div>
+						
+					</div>
+					<div class="col-sm-5">
+						<!-- img1 -->
+						
+						<!-- img1 -->
+						<div class="card">
+							<div class="card-block">
+								<div class="sub-title">รูปสินค้า 2</div>
+								<input type="file" name="img_2" id="filer_input_oze_img_2" onchange="showPreview(this,'img_2')">
+								<a class="thumb-image" href="/static/error.png" id="sh_img_2"  >
+									<img src="/static/error.png" width="400" class="img-responsive" alt="รูปที่ 2 " id="img_2" onerror="this.src='/static/error.png'" >
+								</a>
+								
+								
+							</div>
+							<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_2"   onclick="delImg('img_2')">ลบรูปสินค้า</button> 
+						</div>
+						
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label"></label>
+					<div class="col-sm-5">
+						<!-- img1 -->
+						<div class="card">
+							<div class="card-block">
+								<div class="sub-title">รูปสินค้า 3</div>
+								<input type="file" name="img_3" id="filer_input_oze_img_3"  onchange="showPreview(this,'img_3')">
+								<a class="thumb-image" href="/static/error.png" id="sh_img_3"  >
+									<img src="/static/error.png" width="400" class="img-responsive" alt="รูปที่ 3 " id="img_3" onerror="this.src='/static/error.png'" >
+								</a>
+								 
+								
+							</div>
+							<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_3"   onclick="delImg('img_3')">ลบรูปสินค้า</button>
+						</div>
+						
+					</div>
+					<div class="col-sm-5">
+						<!-- img1 -->
+						
+						<!-- img1 -->
+						<div class="card">
+							<div class="card-block">
+								<div class="sub-title">รูปสินค้า 4</div>
+								<input type="file" name="img_4" id="filer_input_oze_img_4"   onchange="showPreview(this,'img_4')">
+								<a class="thumb-image" href="/static/error.png" id="sh_img_4"  >
+									<img src="/static/error.png" width="400" class="img-responsive" alt="รูปที่ 4 " id="img_4" onerror="this.src='/static/error.png'" >
+								</a>
+								 
+								
+							</div>
+							<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_4"   onclick="delImg('img_4')">ลบรูปสินค้า</button>
+						</div>
+						
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label"></label>
+					<div class="col-sm-5">
+						<!-- img1 -->
+						<div class="card">
+							<div class="card-block">
+								<div class="sub-title">รูปสินค้า 5</div>
+								<input type="file" name="img_5" id="filer_input_oze_img_5"   onchange="showPreview(this,'img_5')">
+								<a class="thumb-image" href="/static/error.png" id="sh_img_5"  >
+									<img src="/static/error.png" width="400"   class="img-responsive" alt="รูปที่ 5 " id="img_5" onerror="this.src='/static/error.png'" >
+								</a>
+								 
+								
+							</div>
+							<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_5"   onclick="delImg('img_5')">ลบรูปสินค้า</button>
+						</div>
+						
+					</div>
+				</div>
+				 
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label"></label>
+					<label class="col-sm-2 col-form-label">กรุณากรอกรหัสผ่าน</label>
+					<div class="col-sm-2">
+						  <input type="password" class="form-control" id="pwd" name="pwd">
+					</div>
+					<div class="col-sm-2">
+						 <button class="btn btn-success btn-round" type="submit">บันทึกข้อมูล</button>
+						
+					</div>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- js -->
+{{block "product/product/js_new.tmpl.html" .}}{{end}}	
+{{end}}

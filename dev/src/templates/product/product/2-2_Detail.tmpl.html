@@ -1,0 +1,338 @@
+{{define "product/product/Detail.tmpl.html" }}
+{{template "teml/teml/upper.tmpl.html" .}}
+{{block "product/product/alert.tmpl.html" .}}{{end}}
+<!-- Main-body start -->
+<div class="page-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="page-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<!-- new -->
+								
+								<div class="card product-detail-page">
+									<div class="card-block">
+										<div class="row">
+											<div class="col-lg-4 col-xs-12">
+												<div class="port_details_all_img row">
+													<div class="col-lg-12 m-b-15">
+														<div id="big_banner">
+															<div class="port_big_img">
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_1.jpg" alt="No Images" id="b_img1">
+															</div>
+															<div class="port_big_img">
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_2.jpg" alt="No Images">
+															</div>
+															<div class="port_big_img">
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_3.jpg" alt="No Images">
+															</div>
+															<div class="port_big_img">
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_4.jpg" alt="No Images">
+															</div>
+															<div class="port_big_img">
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_5.jpg" alt="No Images">
+															</div>
+															
+														</div>
+													</div>
+													<div class="col-lg-12 product-right">
+														<div id="small_banner">
+															<div>
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_1.jpg" alt="No Images1" id="s_img1">
+															</div>
+															<div>
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_2.jpg" alt="No Images2">
+															</div>
+															<div>
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_3.jpg" alt="No Images3">
+															</div>
+															<div>
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_4.jpg" alt="No Images4">
+															</div>
+															<div>
+																<img class="img img-fluid" src="/static/OZE_IMG/Product/{{.imgID}}_5.jpg" alt="No Images5">
+															</div>
+															
+															
+														</div>
+													</div>
+												</div>
+												<!-- image -->
+												<div>
+													<div class="card-block">
+														<!-- image -->
+														<Form action="/product/productAjax" method="POST" enctype="multipart/form-data">
+															<input type="hidden" name="menu"value="UpImg">
+															
+															<input type="hidden" name="idd"  value="{{.PKKEY}}" placeholder="เลข id">
+															<input type="hidden" name="imgID"   value="{{.imgID}}" placeholder="เลtimestamp">
+															<div class="form-group row">
+																<div class="col-sm-8">
+																	<select  class="form-control" id="ImgNo" name="ImgNo" style="display:inline" >
+																		<option value="1">เลือกรูปสินค้าที่ 1</option>
+																		<option value="2">เลือกรูปสินค้าที่ 2</option>
+																		<option value="3">เลือกรูปสินค้าที่ 3</option>
+																		<option value="4">เลือกรูปสินค้าที่ 4</option>
+																		<option value="5">เลือกรูปสินค้าที่ 5</option>
+																	</select>
+																</div>
+																<div class="col-sm-4">
+																	<button class="btn btn-out-dotted btn-danger btn-square" type="button" onclick="delImg()">ลบรูปสินค้า</button>
+																	
+																</div>
+															</div>
+															<div class="form-group row">
+																<div class="col-sm-8">
+																	<input type="file" name="img_product" id="img_product"   onchange="showPreview(this,'id')">
+																	
+																</div>
+																<div class="col-sm-4">
+																	<button class="btn btn-out-dotted btn-success btn-square" type="submit"     >summit</button>
+																	
+																</div>
+															</div>
+														</form>
+														<hr>
+														<!-- Promotion -->
+														<div class="form-group row">
+															<label class="col-sm-3 col-form-label">โปรโมชั่น</label>
+															<div class="col-sm-4">
+																<input type="text" class="form-control" id="productpromotiondate"  disabled>
+															</div>
+															<div class="col-sm-5">
+																<input type="text" class="form-control" id="productpromotiondetail"  disabled >
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="col-sm-3 col-form-label">โปรโมชั่น</label>
+															<div class="col-sm-4">
+																<input type="text" class="form-control" id="productpromotiondate"  disabled>
+															</div>
+															<div class="col-sm-5">
+																<input type="text" class="form-control" id="productpromotiondetail"  disabled >
+															</div>
+														</div>
+														<div class="form-group row">
+															<label class="col-sm-3 col-form-label">โปรโมชั่น</label>
+															<div class="col-sm-4">
+																<input type="text" class="form-control" id="productpromotiondate"  disabled>
+															</div>
+															<div class="col-sm-5">
+																<input type="text" class="form-control" id="productpromotiondetail"  disabled >
+															</div>
+														</div> 
+														
+													</div>
+													<hr>
+													
+													
+												</div>
+											</div>
+											<!-- Right Area-->
+											<div class="col-lg-8 col-xs-12 product-detail" id="product-detail">
+												<Form action="/product/productAjax" method="POST" enctype="multipart/form-data">
+													<input type="hidden" name="menu"value="UpProduct">
+													<input type="hidden" name="pk"  value="{{.PKKEY}}">
+													<input type="hidden" name="imgID"  value="{{.imgID}}">
+													<div class="row">
+														<label class="col-sm-2 col-form-label">สถานะการใช้งาน</label> 
+														<div class="col-sm-3">
+															<select  class="form-control" id="Status" name="Status">
+																<option value="ใช้งาน">ใช้งาน</option>
+																<option value="ระงับการใช้งาน">ระงับการใช้งาน</option>
+															</select>
+														</div>
+													</div>
+													<br>
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">กลุ่มสินค้า</label>
+														<div class="col-sm-4">
+															<select   class="form-control"   id="ProductCate" name="ProductCate" onchange="getSupplierWithCate()">
+																<option value="n/a">กรุณาเลือกกลุ่มสินค้า</option>
+																{{range $cateProduct := .CateProduct}}
+																<option value="{{$cateProduct.CateName}}">{{$cateProduct.CateName}}</option>
+																{{end}}
+																
+															</select>
+														</div>
+														<label class="col-sm-2 col-form-label">ประเภทสินค้า</label>
+														<div class="col-sm-4">
+															<select  class="form-control" id="ProductCountStock" name="ProductCountStock">
+																<option value="1">นับสต็อก</option>
+																<option value="2">ไม่นับสต็อก</option>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">ชื่อสินค้า</label>
+														<div class="col-sm-10">
+															<input type="text" class="form-control" id="productName" name="productName">
+														</div>
+														
+													</div>	
+													
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">รหัสภายใน</label>
+														<div class="col-sm-4">
+															<input type="text" class="form-control" id="IntIDproductName" name="IntIDproductName" disabled>
+														</div>
+														<label class="col-sm-2 col-form-label">รหัสภายนอก</label>
+														<div class="col-sm-4">
+															<input type="text" class="form-control" id="ExtIDproductName" name="ExtIDproductName">
+														</div>
+													</div>
+													
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">ข้อมูลหน่วยนับ </label>
+														<div class="col-sm-3">
+															<select   class="form-control" id="unitBig" name="unitBig">
+																<option value="n/a">กรุณาเลือกหน่วยนับใหญ่</option>
+																{{range $unitBig := .GetAllUnitProduct}}
+																<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+																{{end}}
+															</select>
+														</div>
+														<label class="col-sm-2 col-form-label" >มีจำนวน </label>
+														<div class="col-sm-2">
+															<input type="number" min="0" class="form-control" id="unitCount" name="unitCount" placeholder="จำนวนที่บรรจุ">
+														</div>
+														<div class="col-sm-3">
+															<select   class="form-control" id="unitSmall" name="unitSmall">
+																<option value="n/a">กรุณาเลือกหน่วยนับเล็ก</option>
+																{{range $unitBig := .GetAllUnitProduct}}
+																<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+																{{end}}
+															</select>
+														</div>
+														
+													</div> 
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">ผู้ผลิต</label>
+														<div class="col-sm-6">
+															<select  class="js-example-basic-single"   id="productSupplier" name="productSupplier">
+																{{range $SupWithCateProduct := .getSupplierWithCate}}
+																<option value="{{$SupWithCateProduct.PKKey}}">{{$SupWithCateProduct.SupplyierName}}ชฬ{{$SupWithCateProduct.PKKey}}</option>
+																{{end}}
+																
+																
+															</select>
+															
+														</div>
+														
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">รายละเอียดสินค้า</label>
+														<div class="col-sm-10">
+															<textarea rows="3" cols="5" class="form-control"id="productdetail" name="productdetail"  ></textarea>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">สินค้าทดแทน</label>
+														<div class="col-sm-10">
+															<select  class="js-example-basic-multiple" multiple="multiple" id="productreplace" name="productreplace">
+																
+															</select>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">สินค้าขายประกอบ</label>
+														<div class="col-sm-10">
+															<select  class="js-example-basic-multiple" multiple="multiple" id="productselltoo" name="productselltoo">
+																
+															</select>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">Hashtag</label>
+														<div class="col-sm-10">
+															<select  class="js-example-basic-multiple" multiple="multiple" id="producthashtag" name="producthashtag">
+																
+															</select>
+														</div>
+													</div> 
+													<!-- point -->
+													<div class="form-group row">
+														<label class="col-sm-2 col-form-label">แต้มคะแนน / ชิ้น</label>
+														<div class="col-sm-3">
+															<input type="text"  class="form-control" id="productpoint" name="productpoint" >
+														</div>
+														<label class="col-sm-2 col-form-label" >ค่าคอมมิชชั่น </label>
+														<div class="col-sm-3">
+															<input type="text"  class="form-control" id="productcommition" name="productcommition" >
+														</div>
+													</div>
+													<hr>
+													<!-- price -->
+													{{block "product/product/Detail_Price.tmpl.html" .}}{{end}}
+													
+													<!-- End price -->
+													<hr>
+													<div class="row">
+														<div class="col-sm-12" align="right">
+															<button class="btn btn-success btn-round" type="submit">บันทึกข้อมูล</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							<!-- end new -->
+							
+							<!-- Basic Form Inputs card start -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- js -->
+
+{{block "product/product/2-2_js_detail.tmpl.html" .}}{{end}}
+<!-- ******************** -->
+
+
+{{template "teml/teml/lower.tmpl.html" .}}
+
+{{end}}
+
+<!-- tab -->
+
+<div class="row m-b-30">
+	<div class="col-lg-12 col-xl-12  ">
+		<ul class="nav nav-tabs  tabs" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#ProductDetail" role="tab">รายละเอียดสินค้า</a>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link " data-toggle="tab" href="#ProductPrice" role="tab">ราคาสินค้า</a>
+			</li>
+			<li class="nav-item ">
+				<a class="nav-link " data-toggle="tab" href="#ProductPromotion" role="tab">โปรโมชั่น</a>
+			</li>
+			
+		</ul>
+		<!-- Tab panes -->
+		<div class="tab-content tabs card-block">
+			<div class="tab-pane active" id="ProductDetail" role="tabpanel">
+				{{block "product/product/2-2_T1_Detail.tmpl.html" .}}{{end}}
+			</div>
+			<div class="tab-pane " id="ProductPrice" role="tabpanel">
+				{{block "product/product/2-2_T2_Detail.tmpl.html" .}}{{end}}
+			</div>
+			<div class="tab-pane " id="ProductPromotion" role="tabpanel">
+				{{block "product/product/2-2_T3_Detail.tmpl.html" .}}{{end}}
+			</div>
+			
+		</div>
+		
+	</div>
+</div>
+<!-- end tab -->

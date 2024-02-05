@@ -1,0 +1,189 @@
+{{define "purchase/supplier/new.tmpl.html" }}
+<div class="page-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<!-- Basic Form Inputs card start -->
+			
+			<Form action="/purchase/provinceAjax" method="POST" enctype="multipart/form-data">
+				
+				<input type="hidden" name="menu"value="NewSupplier">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ประเภทผู้จัดจำหน่าย</label>
+					<div class="col-sm-4">
+						<select  class="form-control" id="suptype" name="suptype">
+							<option value="บริษัท/ห้าง">บริษัท/ห้าง</option>
+							<option value="บุคคลธรรมดา">บุคคลธรรมดา</option>
+						</select>
+					</div>
+					<label class="col-sm-2 col-form-label">รหัสผู้จัดจำหน่าย</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="supid" name="supid">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ชื่อผู้จัดจำหน่าย</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="supname" name="supname">
+					</div>
+					<label class="col-sm-2 col-form-label">เลขประจำตัวผู้เสียภาษี</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="suptax" name="suptax">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ที่อยู่</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="supaddress" name="supaddress">
+					</div>
+					
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label"></label>
+					<div class="col-sm-3">
+						<select   class="form-control" id="province" name="province" onchange="setDistrict('province','amp')">
+							<option value="ไม่มีข้อมูล">กรุณาเลือก</option>
+							{{range .getProvince}}
+							<option value="{{.ProvinceThai}}">{{.ProvinceThai}}</option>
+						{{end}}	
+						
+						</select>
+						</div>
+						<div class="col-sm-3">
+						<select  class="form-control" id="amp" name="amp" onchange="setTambon('amp','tam')">
+						<option value="na">อำเภอ</option>
+						</select>
+						</div>
+						<div class="col-sm-2">
+						<select  class="form-control" id="tam" name="tam" onchange="setPostCode('tam','postid')">
+						<option value="na">ตำบล</option>
+						</select>
+						</div>	
+						<div class="col-sm-2">
+						<input type="text" class="form-control" id="postid" name="postid" readonly>
+						</div>	
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">เบอร์ติดต่อ</label>
+						<div class="col-sm-3">
+						<input type="text" class="form-control" id="suptel" name="suptel">
+						</div>
+						
+						
+						
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">ชื่อผู้ติดต่อ</label>
+						<div class="col-sm-6">
+						<input type="text" class="form-control" id="supcontactname" name="supcontactname">
+						</div>
+						<div class="col-sm-4">
+						<input type="text" class="form-control" id="supcontacttel" name="supcontacttel" placeholder="เบอร์ติดต่อ">
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">ข้อมูลธนาคาร</label>
+						<div class="col-sm-2">
+						<select   class="form-control" id="bankbrand" name="bankbrand">
+						<option value="n/a">กรุณาเลือก</option>
+						{{range .bank}}
+						<option value="{{.BankName}}">{{.BankName}}</option>
+						{{end}}
+						
+						
+						</select>
+						</div>
+						<div class="col-sm-4">
+						<input type="text" class="form-control" id="bankno" name="bankno" placeholder="เลขที่บัญชี">
+						</div>
+						<div class="col-sm-4">
+						<input type="text" class="form-control" id="bankaccount" name="bankaccount" placeholder="ชื่อบัญชี">
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">เครดิต / วงเงินอนุมัติ</label>
+						
+						
+						<div class="col-sm-4">
+						<select  class="form-control" id="credit" name="credit">
+						<option value="30">เครดิต 30 วัน</option>
+						<option value="60">เครดิต 60 วัน</option>
+						<option value="90">เครดิต 90 วัน</option>
+						<option value="120">เครดิต 120 วัน</option>
+						</select>
+						</div>
+						<label class="col-sm-2 col-form-label">วงเงินอนุมัติ</label>
+						<div class="col-sm-4">
+						
+						<input type="text" class="form-control" id="cash" name="cash" placeholder="วงเงินอนุมัติ">
+						</div>
+						
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">ข้อมูลวันที่บิลล่าสุด</label>
+						
+						
+						<div class="col-sm-4">
+						<input type="text" class="form-control" id="lastdate"  name="lastdate" placeholder="ข้อมูลปิดยอด" disabled>
+						</div>
+						<label class="col-sm-2 col-form-label">ยอดสะสมตั้งแต่ต้นปี</label>
+						<div class="col-sm-4">
+						
+						<input type="text" class="form-control" id="sumyear"  name="sumyear" placeholder="" disabled>
+						</div>
+						
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">หมวดสินค้า</label>
+						<div class="col-sm-9">
+						<select  class="js-example-basic-multiple" multiple="multiple" id="supcates" name="supcates">
+					   
+						</select>
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">โปรโมชั่นพิเศษ</label>
+						<div class="col-sm-9">
+						<textarea rows="3" cols="5" class="form-control"id="suppro" name="suppro"  ></textarea>
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">หมายเหตุ</label>
+						<div class="col-sm-9">
+						<textarea rows="3" cols="5" class="form-control" id="supcomment" name="supcomment"  ></textarea>  
+						</div>
+						</div>
+						
+						
+						
+						
+						<!---------------------------------------------- 
+						-----------------------------
+						---------------- -->
+						
+						<!--
+						<div class="form-group row">
+						<label class="col-sm-2 col-form-label">สถานะ</label>
+						<div class="col-sm-10">
+						<select name="select" class="form-control" id="status">
+						<option value="ใช้งาน">ใช้งาน</option>
+						<option value="ระงับการใช้งาน">ระงับการใช้งาน</option>
+						</select>
+						</div>
+						</div>
+						-->
+						<div class="row">
+						<div class="col-sm-12" align="right">
+						
+						<button class="btn btn-success btn-round" type="submit">บันทึกข้อมูล</button>
+						</div>
+						</div>
+						
+						
+						</form>
+						
+						</div>
+						</div>
+						</div>
+						
+						{{end}}
+												<button class="btn btn-success btn-round" onclick="AddNewSupplier()">บันทึกข้อมูล--</button>

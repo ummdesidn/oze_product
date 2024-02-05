@@ -1,0 +1,344 @@
+{{define "product/product/Detail_Price.tmpl.html" }}
+
+
+<!-- price -->
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปลีก 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_001" name="price_001" placeholder="ราคาปลีก 1">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_001" name="note_price_001" placeholder="บันทึกราคาปลีก 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปลีก 2</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_002" name="price_002" placeholder="ราคาปลีก 2">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_002" name="note_price_002" placeholder="บันทึกราคาปลีก 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปลีก 3</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_003" name="price_003" placeholder="ราคาปลีก 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_003" name="note_price_003" placeholder="บันทึกราคาปลีก 3">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาค้าส่ง 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_101" name="price_101" placeholder="ราคาค้าส่ง 1">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_101" name="note_price_101" placeholder="ราคาค้าส่ง 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาค้าส่ง 2</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_102" name="price_102" placeholder="ราคาค้าส่ง 2">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_102" name="note_price_102" placeholder="ราคาค้าส่ง 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาค้าส่ง 3</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_103" name="price_103" placeholder="ราคาค้าส่ง 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_103" name="note_price_103" placeholder="ราคาค้าส่ง 3">
+	</div>
+</div>
+
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปัจจุบัน 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_201" name="price_201" placeholder="ราคาปัจจุบัน 1">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_201" name="note_price_201" placeholder="ราคาปัจจุบัน 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปัจจุบัน 2</label>
+	
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_202" name="price_202" placeholder="ราคาปัจจุบัน 2">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_202" name="note_price_202" placeholder="ราคาปัจจุบัน 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาปัจจุบัน 3</label>
+	
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_203" name="price_203" placeholder="ราคาปัจจุบัน 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_203" name="note_price_203" placeholder="ราคาปัจจุบัน 3">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกวงเงิน 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_301" name="price_301" placeholder="ราคาไฟลุกวงเงิน 1">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_301" name="note_price_301" placeholder="ราคาไฟลุกวงเงิน 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกวงเงิน 2</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_302" name="price_302" placeholder="ราคาไฟลุกวงเงิน 2">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_302" name="note_price_302" placeholder="ราคาไฟลุกวงเงิน 2">
+	</div>
+	
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกวงเงิน 3</label>
+	
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_303" name="price_303" placeholder="ราคาไฟลุกวงเงิน 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_303" name="note_price_303" placeholder="ราคาไฟลุกวงเงิน 3">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกเซลล์ 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_401" name="price_401" placeholder="ราคาไฟลุกเซลล์ 1">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_401" name="note_price_401" placeholder="ราคาไฟลุกเซลล์ 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกเซลล์ 2</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_402" name="price_402" placeholder="ราคาไฟลุกเซลล์ 2">
+	</div>
+		 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_402" name="note_price_402" placeholder="ราคาไฟลุกเซลล์ 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาไฟลุกเซลล์ 3</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_403" name="price_403" placeholder="ราคาไฟลุกเซลล์ 3">
+	</div>
+		 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_403" name="note_price_403" placeholder="ราคาไฟลุกเซลล์ 3">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_501" name="price_501" placeholder="ราคาเซลล์ 108 1">
+	</div>
+	  <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_501" name="note_price_501" placeholder="ราคาเซลล์ 108  1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 2</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_502" name="price_502" placeholder="ราคาเซลล์ 108 2">
+	</div>
+		  <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_502" name="note_price_502" placeholder="ราคาเซลล์ 108  2">
+	</div>
+	 
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 3</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_503" name="price_503" placeholder="ราคาเซลล์ 108 3">
+	</div>
+		  <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_503" name="note_price_503" placeholder="ราคาเซลล์ 108  3">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 4</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_504" name="price_504" placeholder="ราคาเซลล์ 108 4">
+	</div>
+	  <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_504" name="note_price_504" placeholder="ราคาเซลล์ 108  4">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 5</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_505" name="price_505" placeholder="ราคาเซลล์ 108 5">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_505" name="note_price_505" placeholder="ราคาเซลล์ 108  5">
+	</div> 
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 6</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_506" name="price_506" placeholder="ราคาเซลล์ 108 6">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_506" name="note_price_506" placeholder="ราคาเซลล์ 108  6">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 7</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_507" name="price_507" placeholder="ราคาเซลล์ 108 7">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_507" name="note_price_507" placeholder="ราคาเซลล์ 108  7">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 8</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_508" name="price_508" placeholder="ราคาเซลล์ 108 8">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_508" name="note_price_508" placeholder="ราคาเซลล์ 108  8">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">ราคาเซลล์ 108 9</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_509" name="price_509" placeholder="ราคาเซลล์ 108 9">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_509" name="note_price_509" placeholder="ราคาเซลล์ 108  9">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ บริษัท 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_601" name="price_601" placeholder="เซลล์ บริษัท 1">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_601" name="note_price_601" placeholder="เซลล์ บริษัท 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ บริษัท 2</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_602" name="price_602" placeholder="เซลล์ บริษัท 2">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_602" name="note_price_602" placeholder="เซลล์ บริษัท 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ บริษัท 3</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_603" name="price_603" placeholder="เซลล์ บริษัท 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_603" name="note_price_603" placeholder="เซลล์ บริษัท 3">
+	</div>
+</div>
+
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ดั๊กอะโกร 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_701" name="price_701" placeholder="เซลล์ดั๊กอะโกร 1">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_701" name="note_price_701" placeholder="เซลล์ดั๊กอะโกร 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ดั๊กอะโกร 2</label>
+	
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_702" name="price_702" placeholder="เซลล์ดั๊กอะโกร 2">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_702" name="note_price_702" placeholder="เซลล์ดั๊กอะโกร 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">เซลล์ดั๊กอะโกร 3</label>
+	
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_703" name="price_703" placeholder="เซลล์ดั๊กอะโกร 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_703" name="note_price_703" placeholder="เซลล์ดั๊กอะโกร 3">
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">งานประมูล 1</label>
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_801" name="price_801" placeholder="งานประมูล 1">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_801" name="note_price_801" placeholder="งานประมูล 1">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">งานประมูล 2</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_802" name="price_802" placeholder="งานประมูล 2">
+	</div>
+	 <div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_802" name="note_price_802" placeholder="งานประมูล 2">
+	</div>
+</div>
+<div class="form-group row">
+	<label class="col-sm-2 col-form-label">งานประมูล 3</label>
+	 
+	<div class="col-sm-3">
+		<input type="text"  class="form-control" id="price_803" name="price_803" placeholder="งานประมูล 3">
+	</div>
+	<div class="col-sm-6">
+		<input type="text"  class="form-control" id="note_price_803" name="note_price_803" placeholder="งานประมูล 3">
+	</div>
+</div>
+
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxx -->
+
+
+
+
+ 
+
+
+<!-- End price -->
+
+
+{{end}}

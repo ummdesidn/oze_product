@@ -1,0 +1,270 @@
+{{define "product/product/2-2_js_detail.tmpl.html" }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	{{range $prd:=.GetProduct}}
+	 
+	document.getElementById("Status").value = "{{$prd.Status}}" ; 
+	document.getElementById("ProductCate").value = "{{$prd.ProductCate}}";
+	document.getElementById("ProductCountStock").value = "{{$prd.ProductCountStock}}" ;
+	
+	document.getElementById("productName").value = "{{$prd.ProductName}}" ;
+	document.getElementById("IntIDproductName").value = "{{$prd.IntIDproductName}}" ;
+	document.getElementById("ExtIDproductName").value = "{{$prd.ExtIDproductName}}" ;
+	document.getElementById("unitBig").value = "{{$prd.UnitBig}}" ;
+	document.getElementById("unitCount").value = "{{$prd.UnitCount}}" ;
+	document.getElementById("unitSmall").value = "{{$prd.UnitSmall}}" ;
+	
+	document.getElementById("productdetail").value = "{{$prd.Productdetail}}" ;
+	document.getElementById("productpoint").value = "{{$prd.ProductPoint}}" ;
+	document.getElementById("productcommition").value = "{{$prd.ProductCommition}}" ;
+	
+	
+	//price
+	document.getElementById("price_001").value = "{{$prd.ProductPrice.Price_001}}" ;
+	document.getElementById("price_002").value = "{{$prd.ProductPrice.Price_002}}" ;
+	document.getElementById("price_003").value = "{{$prd.ProductPrice.Price_003}}" ;
+	
+	document.getElementById("price_101").value = "{{$prd.ProductPrice.Price_101}}" ;
+	document.getElementById("price_102").value = "{{$prd.ProductPrice.Price_102}}" ;
+	document.getElementById("price_103").value = "{{$prd.ProductPrice.Price_103}}" ;
+	
+	document.getElementById("price_201").value = "{{$prd.ProductPrice.Price_201}}" ;
+	document.getElementById("price_202").value = "{{$prd.ProductPrice.Price_202}}" ;
+	document.getElementById("price_203").value = "{{$prd.ProductPrice.Price_203}}" ;
+	
+	document.getElementById("price_301").value = "{{$prd.ProductPrice.Price_301}}" ;
+	document.getElementById("price_302").value = "{{$prd.ProductPrice.Price_302}}" ;
+	document.getElementById("price_303").value = "{{$prd.ProductPrice.Price_303}}" ;
+	
+	document.getElementById("price_401").value = "{{$prd.ProductPrice.Price_401}}" ;
+	document.getElementById("price_402").value = "{{$prd.ProductPrice.Price_402}}" ;
+	document.getElementById("price_403").value = "{{$prd.ProductPrice.Price_403}}" ;
+	
+	document.getElementById("price_501").value = "{{$prd.ProductPrice.Price_501}}" ;
+	document.getElementById("price_502").value = "{{$prd.ProductPrice.Price_502}}" ;
+	document.getElementById("price_503").value = "{{$prd.ProductPrice.Price_503}}" ;
+	document.getElementById("price_504").value = "{{$prd.ProductPrice.Price_504}}" ;
+	document.getElementById("price_505").value = "{{$prd.ProductPrice.Price_505}}" ;
+	document.getElementById("price_506").value = "{{$prd.ProductPrice.Price_506}}" ;
+	document.getElementById("price_507").value = "{{$prd.ProductPrice.Price_507}}" ;
+	document.getElementById("price_508").value = "{{$prd.ProductPrice.Price_508}}" ;
+	document.getElementById("price_509").value = "{{$prd.ProductPrice.Price_509}}" ;
+	
+	document.getElementById("price_601").value = "{{$prd.ProductPrice.Price_601}}" ;
+	document.getElementById("price_602").value = "{{$prd.ProductPrice.Price_602}}" ;
+	document.getElementById("price_603").value = "{{$prd.ProductPrice.Price_603}}" ;
+	
+	document.getElementById("price_701").value = "{{$prd.ProductPrice.Price_701}}" ;
+	document.getElementById("price_702").value = "{{$prd.ProductPrice.Price_702}}" ;
+	document.getElementById("price_703").value = "{{$prd.ProductPrice.Price_703}}" ;
+	
+	document.getElementById("price_801").value = "{{$prd.ProductPrice.Price_801}}" ;
+	document.getElementById("price_802").value = "{{$prd.ProductPrice.Price_802}}" ;
+	document.getElementById("price_803").value = "{{$prd.ProductPrice.Price_803}}" ;
+	
+	
+	 
+	
+	//alert("{{$prd.ProductSupplier.PKKey}}");
+	/*
+	var x = document.getElementById("productSupplier");
+	x.options.length = 0;
+	var opt = document.createElement('option');
+	opt.value = "{{$prd.ProductSupplier.PKKey}}||{{$prd.ProductSupplier.SuppliesName}}";
+	opt.innerHTML = "{{$prd.ProductSupplier.SuppliesName}}";
+	x.appendChild(opt);		 
+			 */
+	//alert("{{$prd.ProductSupplier.SuppliersProductCateArr}}");	
+	var pid = JSON.parse(JSON.stringify({{$prd.ProductSupplier.SuppliersProductCateArr}}));  
+	var s_pk = JSON.parse(JSON.stringify({{$prd.ProductSupplier.SuppliersPKArr}}));  
+	var x = document.getElementById("productSupplier");
+	x.options.length = 0;
+	
+	var opt = document.createElement('option');
+	for ( r in pid) {
+		var opt = document.createElement('option');
+		opt.value = s_pk[r]+"||"+pid[r];
+		opt.innerHTML = pid[r];
+		 
+		x.appendChild(opt);
+	} // for
+	/// productSupplier value
+	document.getElementById("productSupplier").value = "{{$prd.ProductSupplier.PKKey}}||{{$prd.ProductSupplier.SuppliesName}}" ;
+	/// raw Hashtag
+	var rawHashtag = JSON.parse(JSON.stringify({{$prd.ProductHashtag}}));  
+    /// end raw Hashtag
+	
+	function getSupplierWithCate(){
+		var tmpCate = document.getElementById("ProductCate").value;
+		if(tmpCate == "n/a"){
+			return ;
+		}else{
+			$.ajax({
+				type: 'POST',
+				url: '/product/productAjax',
+				data: {
+					'menu': 'goSupplier',
+					'val_sel': tmpCate,
+					
+				},
+				success: function(data) { alert("sss");
+					crateOptionSupplier(data.sup_name,data.PKKey); 
+					
+				//	crateOptionSupplier(data.productreplace,data.productreplace);
+					
+					//crateOptionSupplier(JSON.parse(JSON.stringify(data.pk)),JSON.parse(JSON.stringify(data.name))); 
+					//document.getElementById("showNow").innerHTML = JSON.parse(JSON.stringify(data.retNow));
+					//crateOptionDistrict(JSON.parse(JSON.stringify(data.retNow)),next);
+				},
+				error: function(XMLHttpRequest, errorThrown) {
+					alert("Error => Please  " + errorThrown + "->");
+				}
+			}) // end ajax
+			
+		} // end else
+		
+		
+	}// end func
+	function crateOptionSupplier(name,PKKey){
+		var x = document.getElementById("productSupplier");
+			x.options.length = 0;
+			var opt = document.createElement('option');
+			for ( r in name) {
+				var opt = document.createElement('option');
+				opt.value = PKKey[r]+"||"+name[r];
+				opt.innerHTML = name[r];
+				x.appendChild(opt);
+				
+			} // end for
+		/*
+		var x = document.getElementById("productSupplier");
+			x.options.length = 0;
+			var opt = document.createElement('option');
+			for ( r in name) {
+				var opt = document.createElement('option');
+				opt.value = PKKey[r]+"||"+name[r];
+				opt.innerHTML = name[r];
+				x.appendChild(opt);
+				
+			} // end for
+		*/
+	}// end func
+	{{end}} // range $prd:=.GetProduct
+	/*
+	/// productreplace
+	function crateOptionProductReplace(name,PKKey){
+		var x = document.getElementById("productreplace");
+			x.options.length = 0;
+			var opt = document.createElement('option');
+			for ( r in name) {
+				var opt = document.createElement('option');
+				opt.value = name[r];
+				opt.innerHTML = name[r];
+				x.appendChild(opt);
+				
+			} // end for
+		 
+	}// end func
+	*/
+	// Hashtag
+	{{range $hashtag := .Hashtag}}
+		var x_Hashtag = document.getElementById("producthashtag");
+		var option_Cate1 = document.createElement("option");
+		    option_Cate1.value = {{$hashtag.HashtagName}} ;
+		    option_Cate1.text = {{$hashtag.HashtagName}} ;
+		    x_Hashtag.add(option_Cate1);
+	{{end}}
+	$.each(rawHashtag.toString().split(","), function(i,e){
+    $("#producthashtag option[value='" + e + "']").prop("selected", true);
+	});	
+	/// end Hashtag
+
+	////////////////////////
+	///////// img 
+	//////////////////////////
+	 
+	function showPreview(input, shnow) {
+	 
+	
+		//var imgno = document.getElementById("ImgNo").value;
+		//document.getElementById("s_img1").src = "/static/OZE_IMG/Product/1699884840_2.jpg";
+		
+		type1 = 'image/jpeg';
+		if (input.files[0].type != type1) {
+			alert("กรุณาเลือกรูปภาพ");
+			input.value = "";
+		}
+		if (input.files[0].size > 170000) {
+			// check 170 KB
+			alert("กรุณาเลือกรูปขนาดไม่เกิน 150 KB");
+			input.value = "";
+		};
+		 
+		// show
+		/*
+		var area = '#' + shnow; // img14
+		var area1 = '#sh_' + shnow;   //sh_img14
+		var a = document.getElementById(area1); //or grab it by tagname etc
+		//document.getElementById("btn_rm_"+shnow).hidden = false;
+		//document.getElementById("btn_rm_"+idd).style.visibility = "show"
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function (e) {
+				$(area).attr('src', e.target.result);
+				$(area1).attr('href', e.target.result);
+			};
+			
+			reader.readAsDataURL(input.files[0]);
+		}
+		*/
+	} // end func
+ 
+	function delImg(){ 
+	 
+		var imgno = document.getElementById("ImgNo").value;
+		switch (imgno){
+			case '1' : pos = '{{.imgID}}_1'; break;
+			case '2' : pos = '{{.imgID}}_2'; break;
+			case '3' : pos = '{{.imgID}}_3'; break;
+			case '4' : pos = '{{.imgID}}_4'; break;
+			case '5' : pos = '{{.imgID}}_5'; break;
+		}// end switch
+		
+		
+		
+		
+		
+		 
+		$.ajax({
+			type: 'POST',
+			url: '/product/productAjax',
+			data: {
+				'menu': 'del_img', 
+				'idd': pos,
+			},
+			success: function () {
+				 
+				
+						 
+		//alert("ลบข้อมูลแล้ว");
+		window.location.reload(true);
+				
+			},
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("Error => " + errorThrown + "->" + now);
+			}
+		}) // emd ajax
+		  
+	} // end func
+</script>
+
+{{end}}
+ยังๆม่ได้ทำ ดึงข้อมูลมาแสดง
+- สินค้าทดแทน
+-สินค้าจายประกอบ
+- Hashtag
+- รูปสินค้า
+
+	 

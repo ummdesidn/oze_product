@@ -1,0 +1,249 @@
+{{define "purchase/supplier/js_detail.tmpl.html" }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	/*
+		document.getElementById("xxx").value = "{{.xxx}}" ;
+		document.getElementById("lastdate").value = "{{.xxx}}" ;
+	document.getElementById("sumyear").value = "{{.xxx}}" ;
+	document.getElementById("suppro").value = "{{.xxx}}" ; 
+	*/
+	var  rawCate   ; 
+	{{range $Sup:=.SupplierDetail}} 
+	document.getElementById("Status").value = "{{$Sup.Status}}" ;
+	document.getElementById("suptype").value = "{{$Sup.SupplyierType}}" ;
+	document.getElementById("supid").value = "{{$Sup.SupplyierID}}";
+	document.getElementById("supname").value = "{{$Sup.SupplyierName}}" ;
+	document.getElementById("titlename").value = "{{$Sup.Suptitlename}}" ;
+	
+	document.getElementById("suptax").value = "{{$Sup.SupplyierTax}}" ;
+	document.getElementById("supaddress").value = "{{$Sup.SupplyierName}}" ;
+	document.getElementById("suptel").value = "{{$Sup.SupplyierTel}}" ;
+	document.getElementById("supcontactname").value = "{{$Sup.SupplyierContact}}" ;
+	document.getElementById("supcontacttel").value = "{{$Sup.SupplyierContactTel}}" ;
+	document.getElementById("bankno").value = "{{$Sup.Bank.BankNo}}" ;
+	document.getElementById("bankaccount").value = "{{$Sup.Bank.BookBank}}" ;
+	document.getElementById("cash").value = "{{$Sup.SupplyierCredit.CreditCash}}" ;
+	document.getElementById("supcomment").value = "{{$Sup.Comment}}" ;  
+	document.getElementById("credit").value = "{{$Sup.SupplyierCredit.CreditDate}}" ;
+	document.getElementById("bankbrand").value = "{{$Sup.Bank.BankName}}" ;
+	
+	document.getElementById("province").value = "{{$Sup.ProvinceID}}" ;
+	document.getElementById("postid").value = "{{$Sup.PostID}}" ;
+	/// amp
+	var x_amp = document.getElementById("amp");
+	var option_amp = document.createElement("option");
+	option_amp.value= "{{$Sup.DistrictName}}";
+	option_amp.text= "{{$Sup.DistrictName}}";
+	x_amp.add(option_amp);
+	/// tam
+	var x_tam = document.getElementById("tam");
+	var option_tam= document.createElement("option");
+	option_tam.value= "{{$Sup.TambonName}}";
+	option_tam.text= "{{$Sup.TambonName}}";
+	x_tam.add(option_tam);
+		
+	///// แนวเดิม
+	for ( r in {{$Sup.SupplyierCate}}) {
+	/*alert({{.SupplyierCate}}[r]+document.getElementById("supcates").value);
+	 if(document.getElementById("supcates").value == {{.SupplyierCate}}[r]){
+		 alert({{.SupplyierCate}}[r]);}
+		 */
+	/* ใช้งานได้*/
+	/*
+	// ใช้งานได้ แต่ ออกอันล่าสุด
+$(document).ready(function () {
+	 
+	$('#supcates').val({{.SupplyierCate}}[r]);
+	})
+	*/
+	/* ok  
+	 var x_Cate = document.getElementById("supcates");
+	 var option_Cate = document.createElement("option");
+	 option_Cate.value= {{$Sup.SupplyierCate}}[r];
+	 option_Cate.text= {{$Sup.SupplyierCate}}[r];
+	 option_Cate.selected = "selected"; // กำหนดให้ selected
+	 //option_Cate.innerHTML = {{.SupplyierCate}}[r];
+	 x_Cate.add(option_Cate);
+	*/ 
+	//document.getElementById('supcates').value={{.SupplyierCate}}[r];
+	} // end for
+	/*$("#supcates").select2({
+  tags: true;
+})*/
+ //document.getElementById('supcates').options[0].selected = 'selected'; // ใช้งานได้ โดยกำหนดค่า ตาม ลำดับของ option
+		//	$("#supcates").val();
+	// 	 $("#supcates > option").prop("selected","selected");
+    //   $("#supcates").trigger("change");
+	//	alert($("#supcates").val());	
+			
+//document.getElementById("supcates").value = "a","s";
+
+//document.getElementById("supcates").value = "s";
+	/*
+	var x_Cate = document.getElementById("supcates");
+	var option_Cate = document.createElement("option");
+	option_Cate.value= "{{.SupplyierCate}}";
+	option_Cate.text= "{{.SupplyierCate}}";
+	x_Cate.add(option_Cate);
+	*/ 
+	//alert({{$Sup.SupplyierCate}});
+	 
+	  rawCate = {{$Sup.SupplyierCate}};
+	 
+	 
+	 
+	 {{end}} // $range
+	 
+
+	
+	/// เอา cateProduct มาวน แล้วเช็ค
+	
+	{{range $CateAll:=.CateProduct}}
+		 var x_Cate1 = document.getElementById("supcates");
+		 var option_Cate1 = document.createElement("option");
+		 option_Cate1.value = {{$CateAll.CateName}} ;
+		 option_Cate1.text = {{$CateAll.CateName}} ;
+		 //option_Cate.selected = "selected"; // กำหนดให้ selected
+		 
+		 
+		 x_Cate1.add(option_Cate1);
+	{{end}}
+ 
+	$.each(rawCate.toString().split(","), function(i,e){
+    $("#supcates option[value='" + e + "']").prop("selected", true);
+});		
+	
+</script>
+<script>
+	function setDistrict(here,next){ 
+		//document.getElementById("showNow").innerHTML = "กำลังดำเนินการ กรุณารอสักครู่ อำเภอ";
+		var tmp1 = document.getElementById(here).value;
+		
+		$.ajax({
+			type: 'POST',
+			url: '/purchase/provinceAjax',
+			data: {
+				'menu': 'goDistrict',
+				'val_sel': tmp1,
+				
+			},
+			success: function(data) {
+				
+				//document.getElementById("showNow").innerHTML = JSON.parse(JSON.stringify(data.retNow));
+				crateOptionDistrict(JSON.parse(JSON.stringify(data.retNow)),next);
+			},
+			error: function(XMLHttpRequest, errorThrown) {
+				alert("Error => Please  " + errorThrown + "->");
+			}
+		}) // end ajax
+		
+		
+		
+		
+	} // end func
+	function setTambon(here,next){ 
+		//document.getElementById("showNow").innerHTML = "กำลังดำเนินการ กรุณารอสักครู่ ตำบล";
+		var tmp1 = document.getElementById(here).value;
+		
+		$.ajax({
+			type: 'POST',
+			url: '/purchase/provinceAjax',
+			data: {
+				'menu': 'goTambon',
+				'val_sel': tmp1,
+				
+			},
+			success: function(data) {
+				
+				//document.getElementById("showNow").innerHTML = JSON.parse(JSON.stringify(data.retNow));
+				crateOptionTambon(JSON.parse(JSON.stringify(data.retNow)),next);
+			},
+			error: function(XMLHttpRequest, errorThrown) {
+				alert("Error => Please  " + errorThrown + "->");
+			}
+		}) // end ajax
+		
+		
+		
+		
+	} // end func
+	function setPostCode(here,next){ 
+		//document.getElementById("showNow").innerHTML = "กำลังดำเนินการ กรุณารอสักครู่ ไปรษณีย์";
+		var tmp1 = document.getElementById(here).value;
+		
+		$.ajax({
+			type: 'POST',
+			url: '/purchase/provinceAjax',
+			data: {
+				'menu': 'goPostcode',
+				'val_sel': tmp1,
+				
+			},
+			success: function(data) {
+				
+				//document.getElementById("showNow").innerHTML = JSON.parse(JSON.stringify(data.retNow));
+				document.getElementById(next).value = data.retNow;
+				
+			},
+			error: function(XMLHttpRequest, errorThrown) {
+				alert("Error => Please  " + errorThrown + "->");
+			}
+		}) // end ajax
+		
+		
+		
+		
+	} // end func
+	
+	function crateOptionDistrict(name,selNow){
+		var x = document.getElementById(selNow);
+		x.options.length = 0;
+		var opt = document.createElement('option');
+		opt.value = "na"
+		opt.innerHTML = "อำเภอ";
+		x.appendChild(opt);
+		
+		for ( r in name) {
+			var opt = document.createElement('option');
+			opt.value = name[r];
+			opt.innerHTML = name[r];
+			x.appendChild(opt);
+			
+		} // for
+		// clear
+		var y = document.getElementById("tam");
+		y.options.length = 0;
+		var opt = document.createElement('option');
+		opt.value = "na";
+		opt.innerHTML = "ตำบล";
+		y.appendChild(opt);
+		document.getElementById("txtPost").value= "";
+		
+		
+	}// end func
+	function crateOptionTambon(name,selNow){
+		var x = document.getElementById(selNow);
+		x.options.length = 0;
+		var opt = document.createElement('option');
+		opt.value = "na"
+		opt.innerHTML = "ตำบล";
+		x.appendChild(opt);
+		
+		for ( r in name) {
+			var opt = document.createElement('option');
+			opt.value = name[r];
+			opt.innerHTML = name[r];
+			x.appendChild(opt);
+			
+		} // for
+		// clear
+		
+		document.getElementById("postid").value= "";
+		
+		
+	} // end func
+	
+</script>
+
+{{end}}

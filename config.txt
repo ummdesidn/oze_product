@@ -1,0 +1,2 @@
+mongoDB
+=> db.createUser({user: "OZEadmin",pwd: "MonGoOZE",roles: [ { role: "readWrite", db: "OZEProject" } ]})

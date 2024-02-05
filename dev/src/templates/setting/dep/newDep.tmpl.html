@@ -1,0 +1,125 @@
+{{define "setting/dep/newdep.tmpl.html" }}
+<div class="page-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<!-- Basic Form Inputs card start -->
+			
+			
+			<h4 class="sub-title">ข้อมูลแผนก</h4>
+			
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">ชื่อ-นามสกุล</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="StaffName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">แผนก</label>
+				<div class="col-sm-10">
+					<select name="select" class="form-control" id="Dep">
+						<option value="ฝ่ายจัดซื้อ">ฝ่ายจัดซื้อ</option>
+						<option value="ฝ่ายขาย">ฝ่ายขาย</option>
+						<option value="ฝ่ายคลังสินค้า">ฝ่ายคลังสินค้า</option>
+						<option value="ฝ่ายบัญชี">ฝ่ายบัญชี</option>
+						 
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">ตำแหน่ง</label>
+				<div class="col-sm-10">
+					<select name="select" class="form-control" id="Level">
+						<option value="พนักงาน">พนักงาน</option>
+						<option value="หัวหน้า">หัวหน้า</option>
+						 
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 mobile-inputs">
+					<h4 class="sub-title">การเข้าสู่ระบบ</h4>
+					<div class="form-group">
+						<input type="text" class="form-control form-txt-primary" placeholder="Username" id="usr">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control form-txt-danger" placeholder="password" id="pwd">
+					</div>
+				</div>
+				<div class="col-sm-6 mobile-inputs">
+					<h4 class="sub-title">ข้อมูลติดต่อ</h4>
+					<div class="form-group">
+						<input type="text" class="form-control form-txt-primary" placeholder="Email" id="Email">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control form-txt-warning" placeholder="Mobile" id="Mobile">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control form-txt-success" placeholder="Tel" id="Tel">
+					</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-sm-12" align="right">
+				<button class="btn btn-success btn-round" onclick="AddNow()">บันทึกข้อมูล</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+{{end}}
+<div class="row">
+	<div class="col-sm-6">
+		<h4 class="sub-title">Input Sizes</h4>
+		<form>
+			<div class="form-group row">
+				<div class="col-sm-12">
+					<input type="text" class="form-control form-control-lg" placeholder=".form-control-lg">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder=".form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-8">
+					<input type="text" class="form-control form-control-sm" placeholder=".form-control-sm">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-sm-6 mobile-inputs">
+		<h4 class="sub-title">Color Inputs</h4>
+		<form>
+			<div class="form-group">
+				<input type="text" class="form-control form-control-primary" placeholder=".form-control-primary">
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-warning" placeholder=".form-control-warning">
+				</div>
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-default" placeholder=".form-control-default">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-danger" placeholder=".form-control-danger">
+				</div>
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-success" placeholder=".form-control-success">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-inverse" placeholder=".form-control-inverse">
+				</div>
+				<div class="col-sm-6">
+					<input type="text" class="form-control form-control-info" placeholder=".form-control-info">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

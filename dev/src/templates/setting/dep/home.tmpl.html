@@ -1,0 +1,95 @@
+{{define "setting/dep/home.tmpl.html" }}
+{{template "teml/teml/upper.tmpl.html" .}}
+{{block "setting/dep/alert.tmpl.html" .}}{{end}}
+<!-- Main-body start -->
+<div class="main-body">
+	<div class="page-wrapper">
+		<!-- Page-header start -->
+		<div class="page-header">
+			<div class="row align-items-end">
+				<div class="col-lg-8">
+					<div class="page-header-title">
+						<div class="d-inline">
+							<h4>ข้อมูลแผนก</h4>
+							<span>....</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item">
+								<a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+							</li>
+							<li class="breadcrumb-item"><a href="#!">{{.title}}</a>
+							</li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Page-header end -->
+		
+		<!-- Page-body start -->
+		<div class="page-body">
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Basic Button table start -->
+					<div class="card">
+						<div class="card-header">
+							
+							
+							<!-- Row start -->
+							<div class="row m-b-30">
+								<div class="col-lg-12 col-xl-12  ">
+									<ul class="nav nav-tabs  tabs" role="tablist">
+										
+										<li class="nav-item ">
+											<a class="nav-link active" data-toggle="tab" href="#showDep" role="tab">ข้อมูลแผนก</a>
+										</li>
+										
+									</ul>
+									<!-- Tab panes -->
+									<div class="tab-content tabs card-block">
+										
+										<div class="tab-pane active" id="showDep" role="tabpanel">
+											{{block "setting/dep/deptable.tmpl.html" .}}{{end}}
+										</div>
+										
+									</div>
+									
+								</div>
+							</div>
+							<!-- Row end -->
+							
+							
+						</div>
+						
+						
+						
+						
+						<div class="card-block">
+							
+							<!-- DataTable -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Basic Button table end -->
+		
+		<!-- ******************** -->
+		{{block "setting/dep/js.tmpl.html" .}}{{end}}
+		
+		{{template "teml/teml/lower.tmpl.html" .}}
+		
+		{{end}}
+		<li class="nav-item">
+			<a class="nav-link " data-toggle="tab" href="#newDep" role="tab">เพิ่มข้อมูล</a>
+		</li>
+		<div class="tab-pane " id="newDep" role="tabpanel">
+			"setting/dep/newdep.tmpl.html" 	
+		</div>
+		

@@ -1,0 +1,243 @@
+{{define "product/product/2-2_T1_Detail.tmpl.html" }}
+
+
+<Form action="/product/productAjax" method="POST" enctype="multipart/form-data">
+	
+	<input type="hidden" name="menu"value="UpProduct">
+	<input type="hidden" name="pk"  value="{{.PKKEY}}">
+	<input type="hidden" name="imgID"  value="{{.imgID}}">
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">สถานะการใช้งาน</label>
+		<div class="col-sm-4">
+			<select  class="form-control" id="Status" name="Status">
+				<option value="ใช้งาน">ใช้งาน</option>
+				<option value="ระงับการใช้งาน">ระงับการใช้งาน</option>
+			</select>
+		</div>
+		
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">กลุ่มสินค้า</label>
+		<div class="col-sm-4">
+			<select   class="form-control"   id="ProductCate" name="ProductCate" onchange="getSupplierWithCate()">
+				<option value="n/a">กรุณาเลือกกลุ่มสินค้า</option>
+				{{range $cateProduct := .CateProduct}}
+				<option value="{{$cateProduct.CateName}}">{{$cateProduct.CateName}}</option>
+				{{end}}
+				
+			</select>
+		</div>
+		<label class="col-sm-2 col-form-label">ประเภทสินค้า</label>
+		<div class="col-sm-4">
+			<select  class="form-control" id="ProductCountStock" name="ProductCountStock">
+				<option value="1">นับสต็อก</option>
+				<option value="2">ไม่นับสต็อก</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">ชื่อสินค้า</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="productName" name="productName">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">รหัสภายใน</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="IntIDproductName" name="IntIDproductName" disabled>
+		</div>
+		<label class="col-sm-2 col-form-label">รหัสภายนอก</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" id="ExtIDproductName" name="ExtIDproductName">
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">ข้อมูลหน่วยนับ </label>
+		<div class="col-sm-3">
+			<select   class="form-control" id="unitBig" name="unitBig">
+				<option value="n/a">กรุณาเลือกหน่วยนับใหญ่</option>
+				{{range $unitBig := .GetAllUnitProduct}}
+				<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+				{{end}}
+			</select>
+		</div>
+		<label class="col-sm-2 col-form-label" >มีจำนวน </label>
+		<div class="col-sm-2">
+			<input type="number" min="0" class="form-control" id="unitCount" name="unitCount" placeholder="จำนวนที่บรรจุ">
+		</div>
+		<div class="col-sm-3">
+			<select   class="form-control" id="unitSmall" name="unitSmall">
+				<option value="n/a">กรุณาเลือกหน่วยนับเล็ก</option>
+				{{range $unitBig := .GetAllUnitProduct}}
+				<option value="{{$unitBig.UnitName}}">{{$unitBig.UnitName}}</option>
+				{{end}}
+			</select>
+		</div>
+		
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">ผู้ผลิต</label>
+		<div class="col-sm-6">
+			<select  class="js-example-basic-single"   id="productSupplier" name="productSupplier">
+				{{range $SupWithCateProduct := .getSupplierWithCate}}
+				<option value="{{$SupWithCateProduct.PKKey}}">{{$SupWithCateProduct.SupplyierName}}ชฬ{{$SupWithCateProduct.PKKey}}</option>
+				{{end}}
+				
+				
+			</select>
+			
+		</div>
+		
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">รายละเอียดสินค้า</label>
+		<div class="col-sm-10">
+			<textarea rows="3" cols="5" class="form-control"id="productdetail" name="productdetail"  ></textarea>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">สินค้าทดแทน</label>
+		<div class="col-sm-10">
+			<select  class="js-example-basic-multiple" multiple="multiple" id="productreplace" name="productreplace">
+				
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">สินค้าขายประกอบ</label>
+		<div class="col-sm-10">
+			<select  class="js-example-basic-multiple" multiple="multiple" id="productselltoo" name="productselltoo">
+				
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">Hashtag</label>
+		<div class="col-sm-10">
+			<select  class="js-example-basic-multiple" multiple="multiple" id="producthashtag" name="producthashtag">
+				
+			</select>
+		</div>
+	</div>
+	<!-- point -->
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">แต้มคะแนน / ชิ้น</label>
+		<div class="col-sm-3">
+			<input type="text"  class="form-control" id="productpoint" name="productpoint" >
+		</div>
+		<label class="col-sm-2 col-form-label" >ค่าคอมมิชชั่น </label>
+		<div class="col-sm-3">
+			<input type="text"  class="form-control" id="productcommition" name="productcommition" >
+		</div>
+	</div>
+	<!-- end point -->
+	<!-- img -->
+	<!-- row 1 -->
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label">รูปสินค้า</label>
+		<div class="col-sm-5">
+			<!-- img1 -->
+			<div class="card">
+				
+				<div class="card-block">
+					<div class="sub-title">รูปสินค้า 1</div>
+					<input type="file" name="img_1" id="filer_input_oze_img_1"   onchange="showPreview(this,'img_1')">
+					<a class="thumb-image" href="/static/OZE_IMG/Product/{{.imgID}}_1.jpg" id="sh_img_1"    >
+						<img src="/static/OZE_IMG/Product/{{.imgID}}_1.jpg" width="400" class="img-responsive" alt="รูปที่ 1 " name="img_1"  id="img_1" onerror="this.src='/static/error.png'" >
+					</a>
+					
+					
+					
+				</div>
+				<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_1"   onclick="delImg('img_1')">ลบรูปสินค้า</button> 
+			</div>
+			
+		</div>
+		<div class="col-sm-5">
+			<!-- img1 -->
+			
+			<!-- img1 -->
+			<div class="card">
+				<div class="card-block">
+					<div class="sub-title">รูปสินค้า 2</div>
+					<input type="file" name="img_2" id="filer_input_oze_img_2" onchange="showPreview(this,'img_2')">
+					<a class="thumb-image" href="/static/OZE_IMG/Product/{{.imgID}}_2.jpg" id="sh_img_2"  >
+						<img src="/static/OZE_IMG/Product/{{.imgID}}_2.jpg" width="400" class="img-responsive" alt="รูปที่ 2 " name="img_2" id="img_2" onerror="this.src='/static/error.png'" >
+					</a>
+					
+				</div>
+				<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_2"   onclick="delImg('img_2')">ลบรูปสินค้า</button> 
+				
+			</div>
+			
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label"></label>
+		<div class="col-sm-5">
+			<!-- img1 -->
+			<div class="card">
+				<div class="card-block">
+					<div class="sub-title">รูปสินค้า 3</div>
+					<input type="file" name="img_3" id="filer_input_oze_img_3"  onchange="showPreview(this,'img_3')">
+					<a class="thumb-image" href="/static/OZE_IMG/Product/{{.imgID}}_3.jpg" id="sh_img_3"  >
+						<img src="/static/OZE_IMG/Product/{{.imgID}}_3.jpg" width="400" class="img-responsive" alt="รูปที่ 3 " id="img_3" name="img_3" onerror="this.src='/static/error.png'" >
+					</a>
+					
+				</div>
+				<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_3"   onclick="delImg('img_3')">ลบรูปสินค้า</button> 
+				
+			</div>
+			
+		</div>
+		<div class="col-sm-5">
+			<!-- img1 -->
+			
+			<!-- img1 -->
+			<div class="card">
+				<div class="card-block">
+					<div class="sub-title">รูปสินค้า 4</div>
+					<input type="file" name="img_4" id="filer_input_oze_img_4"   onchange="showPreview(this,'img_4')">
+					<a class="thumb-image" href="/static/OZE_IMG/Product/{{.imgID}}_4.jpg" id="sh_img_4"  >
+						<img src="/static/OZE_IMG/Product/{{.imgID}}_4.jpg" width="400" class="img-responsive" alt="รูปที่ 4 " id="img_4" name="img_4" onerror="this.src='/static/error.png'" >
+					</a>
+					
+				</div>
+				<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_4"   onclick="delImg('img_4')">ลบรูปสินค้า</button> 
+				
+			</div>
+			
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-2 col-form-label"></label>
+		<div class="col-sm-5">
+			<!-- img1 -->
+			<div class="card">
+				<div class="card-block">
+					<div class="sub-title">รูปสินค้า 5</div>
+					<input type="file" name="img_5" id="filer_input_oze_img_5"   onchange="showPreview(this,'img_5')">
+					<a class="thumb-image" href="/static/OZE_IMG/Product/{{.imgID}}_5.jpg" id="sh_img_5"  >
+						<img src="/static/OZE_IMG/Product/{{.imgID}}_5.jpg" width="400"   class="img-responsive" alt="รูปที่ 5 " id="img_5" name="img_5" onerror="this.src='/static/error.png'" >
+					</a>
+					
+				</div>
+				<button type="button" class="btn btn-danger btn-round" id="btn_rm_img_5"   onclick="delImg('img_5')">ลบรูปสินค้า</button> 
+				
+			</div>
+			
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" align="right">
+			<button class="btn btn-success btn-round" type="submit">บันทึกข้อมูล</button>
+		</div>
+	</div>
+	
+	
+	
+</form>
+
+
+
+{{end}}

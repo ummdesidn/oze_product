@@ -1,0 +1,99 @@
+{{define "setting/productUnit/js.tmpl.html" }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function AddNow(){
+	 
+		if(document.getElementById("ProductUnitName").value == ""){alert("กรุณากรอกข้อมูลใหครบถ้วน");
+		}else{ 
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "ProductUnitNew",  //  13,14
+					'Namee': document.getElementById("ProductUnitName").value,
+					'Status': document.getElementById("status").value,
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location.reload(true);
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end	func
+	$(document).ready(function() {
+		$('#pl-table').DataTable( {
+			"responsive": true,
+			"aaData":{{.unitProduct}},
+			"aoColumns":
+			[
+			{"mDataProp": "UnitName", className: "text-center"},
+			{"mDataProp": "Status",className: "text-center"},
+			{"mDataProp": "PKKey",
+				render: function ( data, type, row ) {
+					return '<a href="/unitproductdetail/'+data+'">Click</a>';
+					
+					
+				},
+				
+			className: "text-center"},
+			] , /// color
+			createdRow: function (row, data, dataIndex) {  
+							if(data['Status'] == "ระงับการใช้งาน"){
+								$(row).css('background-color', '#bbbbbb');
+							}
+			},
+											
+		} ); // end DataTable
+		
+		
+	}
+	); // end $.Doc
+	function UpNow(){ 
+		if(document.getElementById("UnitName").value == ""){alert("กรุณากรอกข้อมูลใหครบถ้วน");}else{
+			$.ajax({
+				type: 'POST',
+				url: '/setting/ajax/',
+				data: {
+					'menu': "ProductUnitUp",  //   
+					'PKKey1':document.getElementById("PKkey").value,
+					'Status':document.getElementById("Status").value,
+					'Namee': document.getElementById("UnitName").value,
+					 
+					contentType: false,
+					processData: false,
+				},
+				success: function (data) { 
+					alert(data.msg);
+					window.location = "/setting/ProductUnit";
+					 
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+		}// end else
+		
+		
+		
+	}// end
+	{{range .unitProduct}}
+ 
+	document.getElementById("Status").value = {{.Status}} ;
+	document.getElementById("UnitName").value = {{.UnitName}} ;
+	 
+	document.getElementById("PKkey").value = {{.PKKey}} ;
+	{{end}}
+</script>
+
+{{end}}
+ 

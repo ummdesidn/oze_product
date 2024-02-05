@@ -1,0 +1,153 @@
+{{define "form/datatable/js.tmpl.html" }}
+<script>
+ 
+	function CheckNow(i){ alert("row : "+i) 
+		var sel_m = document.getElementById("sel_m_"+i).value; 
+		var sel_y = document.getElementById("sel_y_"+i).value;
+		var upFile = document.getElementById("upfile_"+i);  
+		// var fileExt = sender.value;
+		var validExts = new Array(".xlsx", ".xls", ".csv");
+		var up_val = upFile.value;
+		up_val = up_val.substring(up_val.lastIndexOf('.'));
+		if(sel_m == 0 || sel_y == 0){
+			alert("กรุณาเลือกเดือน/ปี");
+			break;
+			return false;
+		}
+		else if (validExts.indexOf(up_val) < 0) {
+			alert("Invalid file selected, valid files are of " +
+			validExts.toString() + " types.");
+			break;
+			return false;
+			
+		}
+		else{
+			alert("กำลังบันทึกข้อมูลกรุณารอสักครู่");
+			return true;
+		} // end else
+		alert("กำลังบันทึกข้อมูลกรุณารอสักครู่");
+	}// end func	
+	///// ทดสอบ AJAX
+/*	function UpNow(i){ // ไม่ได้ใช้งาน
+	alert("1");
+	 
+	
+		var sel_m = document.getElementById("sel_m_"+i).value; 
+		var sel_y = document.getElementById("sel_y_"+i).value;
+		var upFile = document.getElementById("upfile_"+i);  
+		// var fileExt = sender.value;
+		alert("2");
+		var validExts = new Array(".xlsx", ".xls", ".csv");
+		var up_val = upFile.value;
+		up_val = up_val.substring(up_val.lastIndexOf('.'));
+		alert("3");
+		if(sel_m == 0 || sel_y == 0){
+			alert("กรุณาเลือกเดือน/ปี");
+			return false;
+		}
+		else if (validExts.indexOf(up_val) < 0) {
+			alert("Invalid file selected, valid files are of " +
+			validExts.toString() + " types.");
+			
+			return false;
+			
+		}
+		else{
+			
+			//return true;
+			//Ajax
+			var fd = new FormData();
+			alert("aaa"+ upFile.value);
+			var files = $('#upfile_1')[0].files
+			 
+			 if(files.length > 0 ){
+				alert("have file");
+				 fd.append('file',files[0]);
+				}
+			$.ajax({
+				type: 'POST',
+				url: '/PaymentAjax/',
+				data: {
+					'menu': "AddExcel",  //  13,14
+					'month': sel_m,
+					'year': sel_y,
+					'excel':fd,
+					 contentType: false,
+                        processData: false,
+				},
+				success: function (data) { 
+					alert("Ajax is ok ");
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+			
+			
+			
+			
+			
+		} // end else
+	
+	}// end func*/
+</script>
+{{end}}
+function UpNow(i){ // ไม่ได้ใช้งาน
+		var sel_m = document.getElementById("sel_m_"+i).value; 
+		var sel_y = document.getElementById("sel_y_"+i).value;
+		var upFile = document.getElementById("upfile_"+i);  
+		// var fileExt = sender.value;
+		var validExts = new Array(".xlsx", ".xls", ".csv");
+		var up_val = upFile.value;
+		up_val = up_val.substring(up_val.lastIndexOf('.'));
+		if(sel_m == 0 || sel_y == 0){
+			alert("กรุณาเลือกเดือน/ปี");
+			return false;
+		}
+		else if (validExts.indexOf(up_val) < 0) {
+			alert("Invalid file selected, valid files are of " +
+			validExts.toString() + " types.");
+			
+			return false;
+			
+		}
+		else{
+			
+			//return true;
+			//Ajax
+			var fd = new FormData();
+			alert("aaa"+ upFile.value);
+			var files = $('#upfile_2')[0].files
+			 
+			 if(files.length > 0 ){
+				alert("have file");
+				 fd.append('file',files[0]);
+				}
+			$.ajax({
+				type: 'POST',
+				url: '/PaymentAjax/',
+				data: {
+					'menu': "AddExcel",  //  13,14
+					'month': sel_m,
+					'year': sel_y,
+					'excel':fd,
+					 contentType: false,
+                        processData: false,
+				},
+				success: function (data) { 
+					alert("Ajax is ok ");
+				},
+				error: function (XMLHttpRequest, errorThrown) {
+					alert("Error => " + errorThrown + "->" );
+				}
+			})// end ajax
+			
+			
+			
+			
+			
+			
+		} // end else
+		
+	}// end func

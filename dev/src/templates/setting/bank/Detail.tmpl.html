@@ -1,0 +1,80 @@
+{{define "setting/bank/Detail.tmpl.html" }}
+{{template "teml/teml/upper.tmpl.html" .}}
+{{block "setting/bank/alert.tmpl.html" .}}{{end}}
+<!-- Main-body start -->
+<div class="main-body">
+	<div class="page-wrapper">
+		<!-- Page-header start -->
+		<div class="page-header">
+			<div class="row align-items-end">
+				<div class="col-lg-8">
+					 
+				</div>
+				<div class="col-lg-4">
+					<div class="page-header-breadcrumb">
+						<ul class="breadcrumb-title">
+							<li class="breadcrumb-item">
+								<a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+							</li>
+							<li class="breadcrumb-item"><a href="#!">{{.title}}</a>
+							</li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Page-header end -->
+		
+		<!-- Page-body start -->
+		<div class="page-body">
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Basic Button table start -->
+					<div class="card">
+						<div class="card-header">
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">สถานะการใช้งาน</label>
+								<div class="col-sm-2">
+									<select name="select" class="form-control" id="Status">
+										<option value="ใช้งาน">ใช้งาน</option>
+										<option value="ระงับการใช้งาน">ระงับการใช้งาน</option>
+									</select> 
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-2 col-form-label">รายชื่อธนาคาร</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="BankName">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12" align="right">
+									<input type="hidden" id="PKkey" >
+									<input type="hidden" id="OldVal">
+									<button class="btn btn-success btn-round" onclick="UpNow()">บันทึกข้อมูล</button>
+									 
+								</div>
+							</div>
+						
+						
+						
+						
+						<div class="card-block">
+							
+							<!-- DataTable -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- js -->
+		{{block "setting/bank/js.tmpl.html" .}}{{end}}
+		<!-- ******************** -->
+		
+		
+		{{template "teml/teml/lower.tmpl.html" .}}
+		
+		{{end}}
+		
