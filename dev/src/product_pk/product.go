@@ -399,6 +399,9 @@ func (p AllProduct) GetProductWithPK(c *gin.Context) (RetNow []AllProduct) {
 	var tmp_SupplierPK string
 	var Arr_tmp_SupplierPK []string
 	var ProductCate AllSupplier
+	var tmp_PK primitive.ObjectID
+	var ProductReplace ProductReplace
+	var ProductTo ProductTo
 
 	for cursor.Next(ctx) {
 		//var result Supplyier
@@ -406,6 +409,7 @@ func (p AllProduct) GetProductWithPK(c *gin.Context) (RetNow []AllProduct) {
 			log.Fatal(err)
 		}
 		tmp_CateProduct = result.ProductCate
+		tmp_PK = result.PKKey
 		results = append(results, result)
 	}
 	if err := cursor.Err(); err != nil {
@@ -430,14 +434,93 @@ func (p AllProduct) GetProductWithPK(c *gin.Context) (RetNow []AllProduct) {
 		tmp_SupplierPK = ProductCate.PKKey.String()
 		Arr_tmp_SupplierPK = append(Arr_tmp_SupplierPK, tmp_SupplierPK)
 
-	}
+	} // end for
 	result.ProductSupplier.SuppliersProductCateArr = Arr_tmp_Supplier
 	result.ProductSupplier.SuppliersPKArr = Arr_tmp_SupplierPK // _id
 	results = append(results, result)
-	fmt.Println("result.ProductSupplier.SuppliersProductCateArr :: ", result.ProductSupplier.SuppliersProductCateArr)
+	/// รายการสินค้าทดแทน
+	/// เอา ProductCate = result.ProductCate
+	var Tmp_ProductReplaceName string
+	var Arr_ProductReplaceName []string
+	var Tmp_ProductReplacePK string
+	var Arr_ProductReplacePK []string
+	coll_ReplaceProduct := client.Database(dbName).Collection("tbl_Product")
+	filter_ReplaceProduct := bson.D{{"$and",
+		bson.A{
+			bson.M{"ProductCate": tmp_CateProduct},
+
+			bson.D{{"_id", bson.D{{"$ne", tmp_PK}}}},
+			bson.M{"Status": "ใช้งาน"},
+		},
+	},
+	} // end filter filter_ReplaceProduct
+	//fmt.Println("Tmp_ProductReplace -- > Start ")
+	cursor_ReplaceProduct, err := coll_ReplaceProduct.Find(ctx, filter_ReplaceProduct)
+	defer cursor_ReplaceProduct.Close(ctx)
+
+	for cursor_ReplaceProduct.Next(ctx) {
+
+		if err := cursor_ReplaceProduct.Decode(&ProductReplace); err != nil {
+			log.Fatal(err)
+		}
+		Tmp_ProductReplaceName = ProductReplace.ProductName
+		Arr_ProductReplaceName = append(Arr_ProductReplaceName, Tmp_ProductReplaceName)
+		Tmp_ProductReplacePK = ProductReplace.PKKey.String()
+		Arr_ProductReplacePK = append(Arr_ProductReplacePK, Tmp_ProductReplacePK)
+
+		//fmt.Println("Tmp_ProductReplace -- > ", Tmp_ProductReplaceName)
+
+	} // end for
+	result.ProductReplace.ProductReplaceNameArr = Arr_ProductReplaceName
+	result.ProductReplace.ProductReplacePKArr = Arr_ProductReplacePK
+	results = append(results, result)
+	//fmt.Println("result.ProductReplace.ProductReplaceNameArr -- > ", result.ProductReplace.ProductReplaceNameArr, " === ", result.ProductReplace.ProductReplacePKArr)
+	//fmt.Println("Tmp_ProductReplace -- > End ")
+	//// end Product Replace
+	/// รายการสินค้าประกอบ
+
+	var Tmp_ProductToName string
+	var Arr_ProductToName []string
+	var Tmp_ProductToPK string
+	var Arr_ProductToPK []string
+	coll_ToProduct := client.Database(dbName).Collection("tbl_Product")
+	filter_ToProduct := bson.D{{"$and",
+		bson.A{
+			bson.M{"ProductCate": bson.D{{"$ne", tmp_CateProduct}}},
+
+			bson.M{"Status": "ใช้งาน"},
+		},
+	},
+	} // end filter filter_ReplaceProduct
+	fmt.Println("Tmp_ProductTo -- > Start ")
+	cursor_ToProduct, err := coll_ToProduct.Find(ctx, filter_ToProduct)
+	defer cursor_ToProduct.Close(ctx)
+
+	for cursor_ToProduct.Next(ctx) {
+
+		if err := cursor_ToProduct.Decode(&ProductTo); err != nil {
+			log.Fatal(err)
+		}
+		Tmp_ProductToName = ProductTo.ProductName
+		Arr_ProductToName = append(Arr_ProductToName, Tmp_ProductToName)
+		Tmp_ProductToPK = ProductTo.PKKey.String()
+		Arr_ProductToPK = append(Arr_ProductToPK, Tmp_ProductToPK)
+
+		//fmt.Println("Tmp_ProductTo -- > ", Tmp_ProductReplaceName)
+
+	} // end for
+
+	result.ProductTo.ProductToNameArr = Arr_ProductToName
+	result.ProductTo.ProductToPKArr = Arr_ProductToPK
+	results = append(results, result)
+	fmt.Println("result.ProductTo.ProductToNameArr -- > ", result.ProductTo.ProductToNameArr, " === ", result.ProductTo.ProductToPKArr)
+	fmt.Println("Tmp_ProductTo -- > End ")
+	//// end รายการสินค้าประกอบ
+
 	return results
 } // ebd func
 
+// ///////////////////////////////////////////////////////////////////////
 // ปรับปรุงรายละเอียดสินค้า
 func UpProduct(c *gin.Context) {
 	fmt.Println("UpProduct")

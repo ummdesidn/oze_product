@@ -92,6 +92,27 @@ type AllProduct struct {
 	ProductPrice      AllPrice           `bson:"ProductPrice"` /// ราคาขาย
 	ProductPoint      string             `bson:"ProductPoint"`
 	ProductCommition  string             `bson:"ProductCommition"`
+	ProductReplace    ProductReplace     `bson:"ProductReplace"` // สินค้าทดแทน
+	ProductTo         ProductTo          `bson:"ProductTo"`      // สินค้าขายประกอบ
+
+}
+
+// สินค้าขายประกอบ
+type ProductTo struct {
+	PKKey            primitive.ObjectID `bson:"_id"`
+	ProductName      string             `bson:"ProductName"`
+	ProductToNameArr []string           `bson:"ProductToNameArr"` // เก็บค่าชื่อ
+	ProductToPKArr   []string           `bson:"ProductToPKArr"`   // เก็บค่าชื่อ _id
+
+}
+
+// สินค้าขายทดแทน
+type ProductReplace struct {
+	PKKey                 primitive.ObjectID `bson:"_id"`
+	ProductName           string             `bson:"ProductName"`
+	ProductReplaceNameArr []string           `bson:"ProductReplaceNameArr"` // เก็บค่าชื่อ
+	ProductReplacePKArr   []string           `bson:"ProductReplacePKArr"`   // เก็บค่าชื่อ _id
+
 }
 type SupplierDetail struct {
 	PKKey                   string   `bson:"Supplies_PK"`
