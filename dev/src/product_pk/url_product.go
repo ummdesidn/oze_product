@@ -24,7 +24,8 @@ func URL_ShowProductAll(c *gin.Context) {
 	alert := CheckAlert(c)
 	//staff := Employee{}
 	//GetStaff := staff.GetStaff(c) // Staff
-	prod := AllProduct{}
+	//okprod := AllProduct{}
+	prod := TotalProduct{}
 	GetProduct := prod.GetProduct(c) // product.go
 
 	uni := AllUnitProduct{} // หน่วยนับสินค้า

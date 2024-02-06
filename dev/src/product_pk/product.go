@@ -340,7 +340,7 @@ func NewProduct(c *gin.Context) {
 } // end func
 
 // / ดึงข้อมูลหน้ารวม -ok
-func (p AllProduct) GetProduct(c *gin.Context) (RetNow []AllProduct) {
+func (p TotalProduct) GetProduct(c *gin.Context) (RetNow []TotalProduct) {
 
 	ctx, client, dbName := DBConn()
 	defer client.Disconnect(ctx)
@@ -353,22 +353,45 @@ func (p AllProduct) GetProduct(c *gin.Context) (RetNow []AllProduct) {
 	}
 
 	defer cursor.Close(ctx)
-	var result AllProduct
-	var results []AllProduct
-	var countnow int = 1
+	var result TotalProduct
+	var results []TotalProduct
+
+	var Product AllProduct // เอาค่ามา Select ข้อมูล
+	var ch int = 21        // ข้อมูลสมมติ
+	var ans1, ans2, ans3 string
 	for cursor.Next(ctx) {
 		//var result Supplyier
-		if err := cursor.Decode(&result); err != nil {
+		if err := cursor.Decode(&Product); err != nil {
 			log.Fatal(err)
 		}
-		/*
-			if result.SumTotal == "" {
-				result.SumTotal = "0"
+		result.PKKey = Product.PKKey
+		result.ProductName = Product.ProductName
+		result.IntIDproductName = Product.IntIDproductName
+		result.UnitSmall = Product.UnitSmall
 
-			}
-		*/
-		result.CountNow = countnow
-		countnow++
+		switch ch {
+		case 1:
+			ans1 = Product.ProductPrice.Price_001
+			ans2 = ""
+			ans3 = ""
+		case 2:
+			ans1 = ""
+			ans2 = Product.ProductPrice.Price_002
+			ans3 = ""
+		case 3:
+			ans1 = ""
+			ans2 = ""
+			ans3 = Product.ProductPrice.Price_003
+		default:
+			ans1 = Product.ProductPrice.Price_001
+			ans2 = Product.ProductPrice.Price_002
+			ans3 = Product.ProductPrice.Price_003
+
+		}
+		result.Price_001 = ans1
+		result.Price_002 = ans2
+		result.Price_003 = ans3
+
 		results = append(results, result)
 	}
 	if err := cursor.Err(); err != nil {

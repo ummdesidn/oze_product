@@ -71,6 +71,18 @@ type AllUnitProduct struct {
 	Status    string `json:"Status"`
 	TxtStatus string `json:"TxtStatus"` // txt สถานะ
 }
+
+//// หน้าสินค้ารวม
+type TotalProduct struct {
+	PKKey            primitive.ObjectID `bson:"_id"`
+	IntIDproductName string             `bson:"IntIDproductName"`
+	ProductName      string             `bson:"ProductName"`
+	UnitSmall        string             `bson:"UnitSmall"`
+	Price_001        string             `bson:"Price_001"`
+	Price_002        string             `bson:"Price_002"`
+	Price_003        string             `bson:"Price_003"`
+}
+
 type AllProduct struct {
 	PKKey             primitive.ObjectID `bson:"_id"`
 	CountNow          int                `bson:"CountNow"`
